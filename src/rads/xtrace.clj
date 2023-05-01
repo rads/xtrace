@@ -30,8 +30,8 @@
 (defn process
   {:doc (str "Wrapper for `babashka.process/process`.\n\n  Original docs:\n\n  "
              (:doc (meta #'babashka.process/process)))}
-  [& args]
-  (let [command (if (map? (last args)) (butlast args) args)
-        opts (merge {:pre-start-fn *pre-start-fn*})]
-    (when (map? (last args)) (last args)
-      (p/process command opts))))
+  [opts? & args]
+  (let [command (if (map? opts?) args (cons opts? args))
+        opts (merge {:pre-start-fn *pre-start-fn*}
+                    (when (map? opts?) opts?))]
+    (apply p/process opts command)))

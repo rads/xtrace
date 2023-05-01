@@ -20,7 +20,7 @@ io.github.rads/xtrace {:git/tag "v0.0.1" :git/sha "07f85e8"}
 ;; Same API as babashka.process
 (shell {} "whoami")
 (sh {} "whoami")
-@(process "whoami" {})
+@(process {} "whoami")
 
 ;; Disable tracing globally
 (alter-var-root #'rads.xtrace/*enabled* (constantly false))
