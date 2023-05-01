@@ -15,12 +15,13 @@ io.github.rads/xtrace {:git/tag "v0.0.2" :git/sha "8f5e92b"}
 ## Usage
 
 ```clojure
-(require '[rads.xtrace :refer [shell sh process]])
+(require '[rads.xtrace :refer [shell sh process exec]])
 
 ;; Same API as babashka.process
 (shell {} "whoami")
 (sh {} "whoami")
 @(process {} "whoami")
+(exec {} "whoami")
 
 ;; Disable tracing globally
 (alter-var-root #'rads.xtrace/*enabled* (constantly false))

@@ -4,15 +4,16 @@
 (def ^:dynamic *enabled* true)
 
 (defn default-pre-start-fn [{:keys [cmd]}]
-  (when *enabled*
-    (apply println "+" cmd)))
+  (apply println "+" cmd))
 
 (def ^:dynamic *pre-start-fn* default-pre-start-fn)
 
 (defn- wrap [f]
   (fn [opts? & args]
     (let [command (if (map? opts?) args (cons opts? args))
-          opts (merge {:pre-start-fn *pre-start-fn*}
+          opts (merge {:pre-start-fn (fn [& args]
+                                       (when *enabled*
+                                         (apply *pre-start-fn* args)))}
                       (when (map? opts?) opts?))]
       (apply f opts command))))
 
