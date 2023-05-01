@@ -9,29 +9,30 @@
 
 (def ^:dynamic *pre-start-fn* default-pre-start-fn)
 
-(defn shell
-  {:doc (str "Wrapper for `babashka.process/shell`.\n\n  Original docs:\n\n  "
-             (:doc (meta #'babashka.process/shell)))}
-  [opts? & args]
-  (let [command (if (map? opts?) args (cons opts? args))
-        opts (merge {:pre-start-fn *pre-start-fn*}
-                    (when (map? opts?) opts?))]
-    (apply p/shell opts command)))
+(defn- wrap [f]
+  (fn [opts? & args]
+    (let [command (if (map? opts?) args (cons opts? args))
+          opts (merge {:pre-start-fn *pre-start-fn*}
+                      (when (map? opts?) opts?))]
+      (apply f opts command))))
 
-(defn sh
-  {:doc (str "Wrapper for `babashka.process/sh`.\n\n  Original docs:\n\n  "
-             (:doc (meta #'babashka.process/sh)))}
-  [opts? & args]
-  (let [command (if (map? opts?) args (cons opts? args))
-        opts (merge {:pre-start-fn *pre-start-fn*}
-                    (when (map? opts?) opts?))]
-    (apply p/sh opts command)))
+(def
+  ^{:doc (str "Wrapper for `babashka.process/shell`.\n\n  Original docs:\n\n  "
+              (:doc (meta #'babashka.process/shell)))
+    :argslists '([opts? & args])}
+  shell
+  (wrap p/shell))
 
-(defn process
-  {:doc (str "Wrapper for `babashka.process/process`.\n\n  Original docs:\n\n  "
-             (:doc (meta #'babashka.process/process)))}
-  [opts? & args]
-  (let [command (if (map? opts?) args (cons opts? args))
-        opts (merge {:pre-start-fn *pre-start-fn*}
-                    (when (map? opts?) opts?))]
-    (apply p/process opts command)))
+(def
+  ^{:doc (str "Wrapper for `babashka.process/sh`.\n\n  Original docs:\n\n  "
+              (:doc (meta #'babashka.process/sh)))
+    :argslists '([opts? & args])}
+  sh
+  (wrap p/sh))
+
+(def
+  ^{:doc (str "Wrapper for `babashka.process/process`.\n\n  Original docs:\n\n  "
+              (:doc (meta #'babashka.process/process)))
+    :argslists '[opts? & args]}
+  process
+  (wrap p/process))
