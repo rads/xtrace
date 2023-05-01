@@ -1,5 +1,5 @@
 {:paths ["src"]
  :deps {}
  :aliases
- {:neil {:project {:version "0.0.2"
+ {:neil {:project {:version "0.0.3"
                    :name rads/xtrace}}}}
