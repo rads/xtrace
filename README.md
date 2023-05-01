@@ -9,7 +9,7 @@ The default behavior is similar to `set -x` in `bash`.
 Add the following coordinates to your `deps.edn` or `bb.edn` file:
 
 ```clojure
-io.github.rads/xtrace {:git/tag "v0.0.1" :git/sha "07f85e8"}
+io.github.rads/xtrace {:git/tag "v0.0.2" :git/sha "8f5e92b"}
 ```
 
 ## Usage
