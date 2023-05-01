@@ -37,3 +37,10 @@
     :argslists '[opts? & args]}
   process
   (wrap p/process))
+
+(def
+  ^{:doc (str "Wrapper for `babashka.process/exec`.\n\n  Original docs:\n\n  "
+              (:doc (meta #'babashka.process/exec)))
+    :argslists '[opts? & args]}
+  exec
+  (wrap p/exec))
