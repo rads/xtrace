@@ -4,7 +4,8 @@
 (def ^:dynamic *enabled* true)
 
 (defn default-pre-start-fn [{:keys [cmd]}]
-  (apply println "+" cmd))
+  (binding [*out* *err*]
+    (apply println "+" cmd)))
 
 (def ^:dynamic *pre-start-fn* default-pre-start-fn)
 
